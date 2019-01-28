@@ -1,7 +1,7 @@
 {% set name = "entrypoints" %}
-{% set version = "0.2.3" %}
+{% set version = "0.3" %}
 {% set hash_type = "sha256" %}
-{% set hash_value = "d2d587dde06f99545fb13a383d2cd336a8ff1f359c5839ce3a64c917d10c029f" %}
+{% set hash_value = "c70dd71abe5a8c85e55e12c19bd91ccfeec11a6e99044204511f9ed547d48451" %}
 
 package:
   name: {{ name|lower }}
@@ -13,7 +13,7 @@ source:
   {{ hash_type }}: {{ hash_value }}
 
 build:
-  number: 2
+  number: 0
   script: python setup.py install
 
 requirements:

@@ -12,6 +12,9 @@ source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   {{ hash_type }}: {{ hash_value }}
 
+# This package is in maintenance-only mode. 
+# New code should use the importlib.metadata module in the Python standard library to find and load entry points.
+# see https://entrypoints.readthedocs.io/en/latest/#entrypoints-version
 build:
   skip: True  # [py<36]
   number: 0

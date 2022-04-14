@@ -13,15 +13,29 @@ source:
   {{ hash_type }}: {{ hash_value }}
 
 build:
+  skip: True  # [py<36]
   number: 0
-  script: python setup.py install
+  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv
 
 requirements:
   host:
     - python
+    - pip
+    - flit-core >=2,<4
   run:
     - python
-    - configparser  # [py27]
+
+test:
+  imports:
+    - entrypoints
+  source_files:
+    - tests
+  requires:
+    - pip
+    - pytest
+  commands:
+    - pip check
+    - python -m pytest
 
 about:
   home: https://github.com/takluyver/entrypoints

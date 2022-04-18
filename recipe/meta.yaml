@@ -1,7 +1,7 @@
 {% set name = "entrypoints" %}
-{% set version = "0.3" %}
+{% set version = "0.4" %}
 {% set hash_type = "sha256" %}
-{% set hash_value = "c70dd71abe5a8c85e55e12c19bd91ccfeec11a6e99044204511f9ed547d48451" %}
+{% set hash_value = "b706eddaa9218a19ebcd67b56818f05bb27589b1ca9e8d797b74affad4ccacd4" %}
 
 package:
   name: {{ name|lower }}
@@ -12,16 +12,33 @@ source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   {{ hash_type }}: {{ hash_value }}
 
+# This package is in maintenance-only mode. 
+# New code should use the importlib.metadata module in the Python standard library to find and load entry points.
+# see https://entrypoints.readthedocs.io/en/latest/#entrypoints-version
 build:
+  skip: True  # [py<36]
   number: 0
-  script: python setup.py install
+  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv
 
 requirements:
   host:
     - python
+    - pip
+    - flit-core >=2,<4
   run:
     - python
-    - configparser  # [py27]
+
+test:
+  imports:
+    - entrypoints
+  source_files:
+    - tests
+  requires:
+    - pip
+    - pytest
+  commands:
+    - pip check
+    - python -m pytest
 
 about:
   home: https://github.com/takluyver/entrypoints

@@ -1,30 +1,29 @@
 {% set name = "entrypoints" %}
-{% set version = "0.4" %}
-{% set hash_type = "sha256" %}
-{% set hash_value = "b706eddaa9218a19ebcd67b56818f05bb27589b1ca9e8d797b74affad4ccacd4" %}
+{% set version = "0.4.2" %}
+{% set hash_value = "3bebd9a2cd05e08b123be74c277b36de4a38e899dba6a84ac9962ebe0c22ece6" %}
 
+# This package is in maintenance-only mode.
+# New code should use the importlib.metadata module in the Python standard library to find and load entry points.
+# see https://entrypoints.readthedocs.io/en/latest/#entrypoints-version
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  {{ hash_type }}: {{ hash_value }}
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: {{ hash_value }}
 
-# This package is in maintenance-only mode. 
-# New code should use the importlib.metadata module in the Python standard library to find and load entry points.
-# see https://entrypoints.readthedocs.io/en/latest/#entrypoints-version
 build:
-  skip: True  # [py<36]
+  skip: true  # [py<36]
   number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation
 
 requirements:
   host:
     - python
     - pip
-    - flit-core >=2,<4
+    - flit-core >=2,<5
   run:
     - python
 
@@ -52,7 +51,6 @@ about:
     entry points, which define shell commands by identifying a Python
     function to run
   doc_url: https://entrypoints.readthedocs.io/en/latest/
-  doc_source_url: https://github.com/takluyver/entrypoints/tree/master/doc
   dev_url: https://github.com/takluyver/entrypoints
 
 extra:
